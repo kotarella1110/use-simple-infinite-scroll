@@ -1,6 +1,6 @@
+<h3 align="center">👷🏻‍♂️ under construction</h3>
 <h1 align="center">use-simple-infinite-scroll</h1>
 
-<h2 align="center">👷🏻‍♂️ under construction</h2>
 <h3 align="center">A simple React Hook for infinite scrolling built on the Intersection Observer API</h3>
 
 <p align="center">

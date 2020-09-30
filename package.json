@@ -26,7 +26,7 @@
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
     "release": "semantic-release",
-    "cz": "git-cz"
+    "commit": "commit"
   },
   "keywords": [
     "react",
