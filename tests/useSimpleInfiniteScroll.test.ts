@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import {
   intersectionMockInstance,
@@ -11,7 +10,7 @@ describe('useSimpleInfiniteScroll', () => {
     {
       canLoadMore: boolean;
     },
-    React.MutableRefObject<Element | undefined>[]
+    ((root: Element | null) => void)[]
   >;
   const onLoadMore = jest.fn();
   const target = document.createElement('div');
@@ -25,15 +24,13 @@ describe('useSimpleInfiniteScroll', () => {
         }),
       {
         initialProps: {
-          canLoadMore: false as boolean,
+          canLoadMore: true as boolean,
         },
       },
     );
-    const [ref] = renderHookResult.result.current;
-    ref.current = target;
 
-    const { rerender } = renderHookResult;
-    rerender({ canLoadMore: true });
+    const [ref] = renderHookResult.result.current;
+    ref(target);
   });
 
   it('should observe when canLoadMore is true', () => {
@@ -48,8 +45,10 @@ describe('useSimpleInfiniteScroll', () => {
     const observer = intersectionMockInstance(target);
     expect(observer.observe).toHaveBeenCalledTimes(1);
 
-    const { rerender } = renderHookResult;
+    const { rerender, result } = renderHookResult;
     rerender({ canLoadMore: false });
+    const [ref] = result.current;
+    ref(target);
 
     expect(observer.unobserve).toHaveBeenCalledTimes(1);
     expect(observer.unobserve).toHaveBeenCalledWith(target);
@@ -59,8 +58,9 @@ describe('useSimpleInfiniteScroll', () => {
   it('should unobserve when target element is unmounted', () => {
     const observer = intersectionMockInstance(target);
 
-    const { unmount } = renderHookResult;
-    unmount();
+    const { result } = renderHookResult;
+    const [ref] = result.current;
+    ref(null);
 
     expect(observer.unobserve).toHaveBeenCalledTimes(1);
     expect(observer.unobserve).toHaveBeenCalledWith(target);

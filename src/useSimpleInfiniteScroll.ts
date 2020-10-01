@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 type Options = {
   canLoadMore: boolean;
@@ -13,37 +13,57 @@ export const useSimpleInfiniteScroll = ({
   threshold,
 }: Options) => {
   const onLoadMoreRef = useRef(() => {});
-  const rootRef = useRef<Element>();
-  const targetRef = useRef<Element>();
+  const rootRef = useRef<Element | null>();
+  const targetRef = useRef<Element | null>();
+  const unobserveRef = useRef<() => void>();
+
+  const observeTarget = useCallback(
+    (target?: Element | null, root?: Element | null) => {
+      if (unobserveRef.current) {
+        unobserveRef.current();
+        unobserveRef.current = undefined;
+      }
+
+      if (!target || !canLoadMore) {
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach(
+            (entry) => entry.isIntersecting && onLoadMoreRef.current(),
+          ),
+        {
+          root,
+          rootMargin,
+          threshold,
+        },
+      );
+      observer.observe(target);
+      unobserveRef.current = () => observer.unobserve(target);
+    },
+    [canLoadMore, rootMargin, threshold],
+  );
+
+  const setRootRef = useCallback(
+    (root: Element | null) => {
+      observeTarget(targetRef.current, root);
+      rootRef.current = root;
+    },
+    [observeTarget],
+  );
+
+  const setTargetRef = useCallback(
+    (target: Element | null) => {
+      observeTarget(target, rootRef.current);
+      targetRef.current = target;
+    },
+    [observeTarget],
+  );
 
   useEffect(() => {
     onLoadMoreRef.current = onLoadMore;
   }, [onLoadMore]);
 
-  useEffect(() => {
-    const target = targetRef?.current;
-
-    if (!canLoadMore || !target) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach(
-          (entry) => entry.isIntersecting && onLoadMoreRef?.current(),
-        ),
-      {
-        root: rootRef?.current,
-        rootMargin,
-        threshold,
-      },
-    );
-
-    observer.observe(target);
-
-    // eslint-disable-next-line consistent-return
-    return () => observer.unobserve(target);
-  }, [canLoadMore, rootMargin, threshold]);
-
-  return [targetRef, rootRef];
+  return [setTargetRef, setRootRef];
 };
