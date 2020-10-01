@@ -26,12 +26,8 @@
 
 ## Installation
 
-```
+```sh
 npm install use-simple-infinite-scroll
-
-# or
-
-yarn add use-simple-infinite-scroll
 ```
 
 ## Usage
@@ -94,6 +90,15 @@ function Projects() {
 
 ## API
 
+```ts
+const useSimpleInfiniteScroll: (options: {
+  canLoadMore: boolean;
+  onLoadMore: () => void;
+  rootMargin?: string;
+  threshold?: number | number[];
+}) => [(target: Element | null) => void, (root: Element | null) => void]
+```
+
 | Name | Type | Default | Required | Descripttion |
 |:---|:---|:---|:---:|:---|
 | `canLoadMore` | `boolean` |  | ✓ | Specifies if there are more entities to load. |
@@ -102,6 +107,20 @@ function Projects() {
 | `threshold` | `number \| number[]` | `0` |  | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. |
 
 For more information on `rootMargin` and `threshold` option, visit the [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+
+## IE11
+
+You can install the [polyfill](https://www.npmjs.com/package/intersection-observer) via npm or by downloading a [zip](https://github.com/w3c/IntersectionObserver/archive/gh-pages.zip) of this repository:
+
+```sh
+npm install intersection-observer
+```
+
+Then import it in your app:
+
+```sh
+npm install intersection-observer
+```
 
 ## Contributing
 

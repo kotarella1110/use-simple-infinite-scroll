@@ -11,7 +11,10 @@ export const useSimpleInfiniteScroll = ({
   onLoadMore,
   rootMargin,
   threshold,
-}: Options) => {
+}: Options): [
+  (target: Element | null) => void,
+  (root: Element | null) => void,
+] => {
   const onLoadMoreRef = useRef(() => {});
   const rootRef = useRef<Element | null>();
   const targetRef = useRef<Element | null>();

@@ -10,7 +10,7 @@ describe('useSimpleInfiniteScroll', () => {
     {
       canLoadMore: boolean;
     },
-    ((root: Element | null) => void)[]
+    [(target: Element | null) => void, (root: Element | null) => void]
   >;
   const onLoadMore = jest.fn();
   const target = document.createElement('div');
