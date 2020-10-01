@@ -16,7 +16,7 @@
   <a href="http://commitizen.github.io/cz-cli/">
     <img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square">
   </a>
-  <a href="#contributors-">
+  <a href="#contributors">
     <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square">
   </a>
   <a href="CONTRIBUTING.md">
@@ -33,6 +33,75 @@ npm install use-simple-infinite-scroll
 
 yarn add use-simple-infinite-scroll
 ```
+
+## Usage
+
+```js
+import { useInfiniteQuery } from 'react-query';
+import { useSimpleInfiniteScroll } from 'use-simple-infinite-scroll';
+
+function Projects() {
+  const fetchProjects = (key, cursor = 0) =>
+    fetch('/api/projects?cursor=' + cursor);
+
+  const {
+    status,
+    data,
+    isFetching,
+    isFetchingMore,
+    fetchMore,
+    canFetchMore,
+  } = useInfiniteQuery('projects', fetchProjects, {
+    getFetchMore: (lastGroup, allGroups) => lastGroup.nextCursor,
+  });
+
+  const [ref] = useSimpleInfiniteScroll({
+    onLoadMore: fetchMore,
+    canLoadMore: canFetchMore,
+  });
+
+  return status === 'loading' ? (
+    <p>Loading...</p>
+  ) : status === 'error' ? (
+    <p>Error: {error.message}</p>
+  ) : (
+    <>
+      {data.map((group, i) => (
+        <React.Fragment key={i}>
+          {group.projects.map((project) => (
+            <p key={project.id}>{project.name}</p>
+          ))}
+        </React.Fragment>
+      ))}
+      <div>
+        <button
+          ref={ref}
+          onClick={() => fetchMore()}
+          disabled={!canFetchMore || isFetchingMore}
+        >
+          {isFetchingMore
+            ? 'Loading more...'
+            : canFetchMore
+            ? 'Load More'
+            : 'Nothing more to load'}
+        </button>
+      </div>
+      <div>{isFetching && !isFetchingMore ? 'Fetching...' : null}</div>
+    </>
+  );
+}
+```
+
+## API
+
+| Name | Type | Default | Required | Descripttion |
+|:---|:---|:---|:---:|:---|
+| `canLoadMore` | `boolean` |  | ✓ | Specifies if there are more entities to load. |
+| `onLoadMore` | `() => void` |  | ✓ | Called when the user has scrolled all the way to the end. |
+| `rootMargin` | `string` | `"0px"` | ✓ | Margin around the root. Can have values similar to the CSS margin property, e.g. `"10px 20px 30px 40px"` (top, right, bottom, left). |
+| `threshold` | `number | number[]` | `0` | ✓ | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. |
+
+For more information on `rootMargin` and `threshold` option, visit the [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
 ## Contributing
 
