@@ -99,7 +99,7 @@ function Projects() {
 | `canLoadMore` | `boolean` |  | ✓ | Specifies if there are more entities to load. |
 | `onLoadMore` | `() => void` |  | ✓ | Called when the user has scrolled all the way to the end. |
 | `rootMargin` | `string` | `"0px"` | ✓ | Margin around the root. Can have values similar to the CSS margin property, e.g. `"10px 20px 30px 40px"` (top, right, bottom, left). |
-| `threshold` | `number | number[]` | `0` | ✓ | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. |
+| `threshold` | `number \| number[]` | `0` | ✓ | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. |
 
 For more information on `rootMargin` and `threshold` option, visit the [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
