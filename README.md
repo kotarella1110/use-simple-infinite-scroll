@@ -32,48 +32,148 @@ npm install use-simple-infinite-scroll
 
 ## Usage
 
-```js
+### Basic
+
+```ts
+import React, { useState } from 'react';
+import { useSimpleInfiniteScroll } from '../use-simple-infinite-scroll';
+
+type Item = {
+  id: number;
+  name: string;
+};
+
+type Result = {
+  data: Item[];
+  nextCursor: number | null;
+};
+
+const canFetchMore = (nextCursor: Result['nextCursor']) => nextCursor !== null;
+
+const InfiniteScrollExample = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = React.useState<Error>();
+  const [items, setItems] = useState<Item[]>([]);
+  const [nextCursor, setNextCursor] = useState<Result['nextCursor']>(0);
+
+  const fetchMore = () => {
+    setIsLoading(true);
+    fetch(`/api/items?cursor=${nextCursor}`)
+      .then((res) => res.json())
+      .then(
+        (res: Result) => {
+          setItems([...items, ...res.data]);
+          setNextCursor(res.nextCursor);
+          setIsLoading(false);
+        },
+        (error) => {
+          setError(error);
+        },
+      );
+  };
+
+  const [loadMoreButtonRef, containerRef] = useSimpleInfiniteScroll({
+    onLoadMore: fetchMore,
+    canLoadMore: canFetchMore(nextCursor),
+  });
+
+  return !items.length && isLoading ? (
+    <p>Loading...</p>
+  ) : error ? (
+    <span>Error: {error.message}</span>
+  ) : (
+    <div
+      style={{
+        maxWidth: '500px',
+        maxHeight: '500px',
+        overflow: 'auto',
+      }}
+      ref={containerRef}
+    >
+      <ul>
+        {items.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+      <div>
+        <button
+          ref={loadMoreButtonRef}
+          onClick={() => fetchMore()}
+          disabled={!canFetchMore(nextCursor) || !!isLoading}
+        >
+          {isLoading
+            ? 'Loading more...'
+            : canFetchMore(nextCursor)
+            ? 'Load More'
+            : 'Nothing more to load'}
+        </button>
+      </div>
+    </div>
+  );
+};
+```
+
+### React Query
+
+```tsx
+import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { useSimpleInfiniteScroll } from 'use-simple-infinite-scroll';
 
-function Projects() {
-  const fetchProjects = (key, cursor = 0) =>
-    fetch('/api/projects?cursor=' + cursor);
+type Item = {
+  id: number;
+  name: string;
+};
 
+type Result = {
+  data: Item[];
+  nextCursor: number | null;
+};
+
+const InfiniteScrollExample = () => {
   const {
     status,
     data,
+    error,
     isFetching,
     isFetchingMore,
     fetchMore,
     canFetchMore,
-  } = useInfiniteQuery('projects', fetchProjects, {
-    getFetchMore: (lastGroup, allGroups) => lastGroup.nextCursor,
-  });
+  } = useInfiniteQuery<Result, Error>(
+    'items',
+    (key: string, cursor = 0) =>
+      fetch(`/api/items?cursor=${cursor}`).then((res) => res.json()),
+    {
+      getFetchMore: (lastGroup) => lastGroup.nextCursor,
+    },
+  );
 
-  const [ref] = useSimpleInfiniteScroll({
+  const [loadMoreButtonRef] = useSimpleInfiniteScroll({
     onLoadMore: fetchMore,
-    canLoadMore: canFetchMore,
+    canLoadMore: !!canFetchMore,
   });
 
   return status === 'loading' ? (
     <p>Loading...</p>
   ) : status === 'error' ? (
-    <p>Error: {error.message}</p>
+    <span>Error: {error && error.message}</span>
   ) : (
     <>
-      {data.map((group, i) => (
-        <React.Fragment key={i}>
-          {group.projects.map((project) => (
-            <p key={project.id}>{project.name}</p>
+      <ul>
+        {data &&
+          data.map((page, i) => (
+            <React.Fragment key={i}>
+              {page.data.map((item) => (
+                <li key={itme.id}>{item.name}</li>
+              ))}
+            </React.Fragment>
           ))}
-        </React.Fragment>
-      ))}
+      </ul>
       <div>
         <button
-          ref={ref}
+          ref={loadMoreButtonRef}
           onClick={() => fetchMore()}
-          disabled={!canFetchMore || isFetchingMore}
+          disabled={!canFetchMore || !!isFetchingMore}
         >
           {isFetchingMore
             ? 'Loading more...'
@@ -82,10 +182,12 @@ function Projects() {
             : 'Nothing more to load'}
         </button>
       </div>
-      <div>{isFetching && !isFetchingMore ? 'Fetching...' : null}</div>
+      <div>
+        {isFetching && !isFetchingMore ? 'Background Updating...' : null}
+      </div>
     </>
   );
-}
+};
 ```
 
 ## API
@@ -96,15 +198,15 @@ const useSimpleInfiniteScroll: (options: {
   onLoadMore: () => void;
   rootMargin?: string;
   threshold?: number | number[];
-}) => [(target: Element | null) => void, (root: Element | null) => void]
+}) => [(target: Element | null) => void, (root: Element | null) => void];
 ```
 
-| Name | Type | Default | Required | Descripttion |
-|:---|:---|:---|:---:|:---|
-| `canLoadMore` | `boolean` |  | ✓ | Specifies if there are more entities to load. |
-| `onLoadMore` | `() => void` |  | ✓ | Called when the user has scrolled all the way to the end. |
-| `rootMargin` | `string` | `"0px"` |  | Margin around the root. Can have values similar to the CSS margin property, e.g. `"10px 20px 30px 40px"` (top, right, bottom, left). |
-| `threshold` | `number \| number[]` | `0` |  | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. |
+| Name          | Type                 | Default | Required | Descripttion                                                                                                                                           |
+| :------------ | :------------------- | :------ | :------: | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `canLoadMore` | `boolean`            |         |    ✓     | Specifies if there are more entities to load.                                                                                                          |
+| `onLoadMore`  | `() => void`         |         |    ✓     | Called when the user has scrolled all the way to the end.                                                                                              |
+| `rootMargin`  | `string`             | `"0px"` |          | Margin around the root. Can have values similar to the CSS margin property, e.g. `"10px 20px 30px 40px"` (top, right, bottom, left).                   |
+| `threshold`   | `number \| number[]` | `0`     |          | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed. |
 
 For more information on `rootMargin` and `threshold` option, visit the [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
@@ -118,8 +220,8 @@ npm install intersection-observer
 
 Then import it in your app:
 
-```sh
-npm install intersection-observer
+```js
+import "intersection-observer";
 ```
 
 ## Contributing
