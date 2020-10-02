@@ -72,7 +72,7 @@ const InfiniteScrollExample = () => {
       );
   };
 
-  const [loadMoreButtonRef, containerRef] = useSimpleInfiniteScroll({
+  const [targetRef, rootRef] = useSimpleInfiniteScroll({
     onLoadMore: fetchMore,
     canLoadMore: canFetchMore(nextCursor),
   });
@@ -88,7 +88,7 @@ const InfiniteScrollExample = () => {
         maxHeight: '500px',
         overflow: 'auto',
       }}
-      ref={containerRef}
+      ref={rootRef}
     >
       <ul>
         {items.map((item) => (
@@ -97,7 +97,7 @@ const InfiniteScrollExample = () => {
       </ul>
       <div>
         <button
-          ref={loadMoreButtonRef}
+          ref={targetRef}
           onClick={() => fetchMore()}
           disabled={!canFetchMore(nextCursor) || !!isLoading}
         >
@@ -148,7 +148,7 @@ const InfiniteScrollExample = () => {
     },
   );
 
-  const [loadMoreButtonRef] = useSimpleInfiniteScroll({
+  const [targetRef] = useSimpleInfiniteScroll({
     onLoadMore: fetchMore,
     canLoadMore: !!canFetchMore,
   });
@@ -171,7 +171,7 @@ const InfiniteScrollExample = () => {
       </ul>
       <div>
         <button
-          ref={loadMoreButtonRef}
+          ref={targetRef}
           onClick={() => fetchMore()}
           disabled={!canFetchMore || !!isFetchingMore}
         >
