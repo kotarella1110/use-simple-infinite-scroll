@@ -16,6 +16,7 @@ type Result = {
 const canFetchMore = (nextCursor: Result['nextCursor']) => nextCursor !== null;
 
 const InfiniteScrollExample = () => {
+  const [scrollable, setScrollable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = React.useState<Error>();
   const [items, setItems] = useState<Item[]>([]);
@@ -43,6 +44,14 @@ const InfiniteScrollExample = () => {
   return (
     <div>
       <h1>Infinite Scroll List - Basic</h1>
+      <input
+        type="checkbox"
+        checked={scrollable}
+        onChange={(e) => {
+          setScrollable(e.target.checked);
+        }}
+      />{' '}
+      Scrollable
       {!items.length && isLoading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -50,12 +59,12 @@ const InfiniteScrollExample = () => {
       ) : (
         <div
           style={{
-            maxWidth: '500px',
-            maxHeight: '500px',
+            maxWidth: scrollable ? '500px' : 'auto',
+            maxHeight: scrollable ? '500px' : 'auto',
             overflow: 'auto',
             backgroundColor: '#e4e4e4',
           }}
-          ref={rootRef}
+          ref={scrollable ? rootRef : null}
         >
           <ul
             style={{
