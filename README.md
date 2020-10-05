@@ -31,6 +31,8 @@ npm install use-simple-infinite-scroll
 
 ## Usage
 
+[![Edit kotarella1110/use-simple-infinite-scroll: example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/kotarella1110/use-simple-infinite-scroll/tree/master/example?fontsize=14&hidenavigation=1&theme=dark)
+
 ### Basic
 
 ```ts
