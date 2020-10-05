@@ -1,6 +1,6 @@
 {
   "name": "use-simple-infinite-scroll",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "A simple React Hook for infinite scrolling built on the Intersection Observer API",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
