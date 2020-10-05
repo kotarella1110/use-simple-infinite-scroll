@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/kotarella1110/use-simple-infinite-scroll/compare/v1.0.9...v1.0.10) (2020-10-05)
+
+
+### Bug Fixes
+
+* **deps:** bump use-simple-infinite-scroll in /example ([8652276](https://github.com/kotarella1110/use-simple-infinite-scroll/commit/86522760e9efd4222590cf46b3fcf90250f0e74e))
+
 ## [1.0.9](https://github.com/kotarella1110/use-simple-infinite-scroll/compare/v1.0.8...v1.0.9) (2020-10-05)
 
 
