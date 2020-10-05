@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import {
   QueryCache,
@@ -29,7 +30,7 @@ const InfiniteScrollExample = () => {
     canFetchMore,
   } = useInfiniteQuery<Result, Error>(
     'projects',
-    (key: string, cursor = 0) =>
+    (_: string, cursor = 0) =>
       fetch(`/api/items?cursor=${cursor}`).then((res) => res.json()),
     {
       getFetchMore: (lastGroup) => lastGroup.nextCursor,
@@ -63,6 +64,7 @@ const InfiniteScrollExample = () => {
           >
             {data &&
               data.map((page, i) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={i}>
                   {page.data.map((project) => (
                     <li
@@ -85,6 +87,7 @@ const InfiniteScrollExample = () => {
             }}
           >
             <button
+              type="button"
               ref={targetRef}
               onClick={() => fetchMore()}
               disabled={!canFetchMore || !!isFetchingMore}

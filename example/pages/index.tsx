@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useSimpleInfiniteScroll } from 'use-simple-infinite-scroll';
@@ -30,9 +31,7 @@ const InfiniteScrollExample = () => {
           setNextCursor(res.nextCursor);
           setIsLoading(false);
         },
-        (error) => {
-          setError(error);
-        },
+        (e: Error) => setError(e),
       );
   };
 
@@ -44,7 +43,7 @@ const InfiniteScrollExample = () => {
   return (
     <div>
       <h1>Infinite Scroll List - Basic</h1>
-      {!items.length && isLoading ? (
+      {items.length && isLoading ? (
         <p>Loading...</p>
       ) : error ? (
         <span>Error: {error.message}</span>
@@ -84,6 +83,7 @@ const InfiniteScrollExample = () => {
             }}
           >
             <button
+              type="button"
               ref={targetRef}
               onClick={() => fetchMore()}
               disabled={!canFetchMore(nextCursor) || !!isLoading}

@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const cursor =
-    (typeof req.query.cursor === 'string' && parseInt(req.query.cursor)) || 0;
+    (typeof req.query.cursor === 'string' && parseInt(req.query.cursor, 10)) ||
+    0;
 
   const data = Array(10)
     .fill(0)

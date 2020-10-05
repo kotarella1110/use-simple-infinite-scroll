@@ -3,11 +3,11 @@
 <h3 align="center">A simple React Hook for infinite scrolling built on the Intersection Observer API</h3>
 
 <p align="center">
-  <a href="LICENSE">
+  <a href="LICENSE.md">
     <img alt="License" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square">
   </a>
-  <a href="https://github.com/kotarella1110/use-simple-infinite-scroll/actions?query=workflow%3ACI">
-    <img alt="Actions Status" src="https://github.com/kotarella1110/use-simple-infinite-scroll/workflows/CI/badge.svg">
+  <a href="https://github.com/kotarella1110/use-simple-infinite-scroll/actions?query=workflow%3ARelease">
+    <img alt="Actions Status" src="https://github.com/kotarella1110/use-simple-infinite-scroll/workflows/Release/badge.svg">
   </a>
   <a href="https://github.com/semantic-release/semantic-release">
     <img alt="Semantic Release" src="https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square">
@@ -65,9 +65,7 @@ const InfiniteScrollExample = () => {
           setNextCursor(res.nextCursor);
           setIsLoading(false);
         },
-        (error) => {
-          setError(error);
-        },
+        (e: Error) => setError(e),
       );
   };
 
@@ -96,6 +94,7 @@ const InfiniteScrollExample = () => {
       </ul>
       <div>
         <button
+          type="button"
           ref={targetRef}
           onClick={() => fetchMore()}
           disabled={!canFetchMore(nextCursor) || !!isLoading}
@@ -170,6 +169,7 @@ const InfiniteScrollExample = () => {
       </ul>
       <div>
         <button
+          type="button"
           ref={targetRef}
           onClick={() => fetchMore()}
           disabled={!canFetchMore || !!isFetchingMore}
