@@ -4761,10 +4761,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-simple-infinite-scroll@^1.0.28:
-  version "1.0.28"
-  resolved "https://registry.yarnpkg.com/use-simple-infinite-scroll/-/use-simple-infinite-scroll-1.0.28.tgz#9b1e53f948355d36b59c4fff165e164995f90e18"
-  integrity sha512-QwSE0toKkfS4fKMdjN7MALV9UuoWwQi+2NpnQ6Q/6SQKHTuUWNRW/Nbn4wGvXZpw8bEEq1cwaXveOJawA2dWWA==
+use-simple-infinite-scroll@^1.0.29:
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/use-simple-infinite-scroll/-/use-simple-infinite-scroll-1.0.29.tgz#19f28acd6070c068dec5501c6217af36bf794f04"
+  integrity sha512-v0Bi6zalMTZjzTrMnTMdLLZ2WNdZYelDVkyth6h6+z9Iiu1qmeWAriUpHmF8I4aO3AAalwUEvIxOeJRkBnnY1Q==
 
 use-subscription@1.4.1:
   version "1.4.1"
