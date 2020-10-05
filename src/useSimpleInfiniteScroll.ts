@@ -18,6 +18,7 @@ export const useSimpleInfiniteScroll = ({
   const onLoadMoreRef = useRef(() => {});
   const rootMarginRef = useRef(rootMargin);
   const thresholdRef = useRef(threshold);
+  const targetRef = useRef<Element | null>();
   const rootRef = useRef<Element | null>();
   const unobserveRef = useRef<() => void>();
 
@@ -25,38 +26,48 @@ export const useSimpleInfiniteScroll = ({
     onLoadMoreRef.current = onLoadMore;
   }, [onLoadMore]);
 
+  const observeTarget = useCallback(() => {
+    if (unobserveRef.current) {
+      unobserveRef.current();
+      unobserveRef.current = undefined;
+    }
+
+    const target = targetRef.current;
+    if (!target || !canLoadMore) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(
+          ({ isIntersecting }) => isIntersecting && onLoadMoreRef.current(),
+        );
+      },
+      {
+        root: rootRef.current,
+        rootMargin: rootMarginRef.current,
+        threshold: thresholdRef.current,
+      },
+    );
+    observer.observe(target);
+    unobserveRef.current = () => observer.unobserve(target);
+  }, [canLoadMore]);
+
   const setTargetRef = useCallback(
     (target: Element | null) => {
-      if (unobserveRef.current) {
-        unobserveRef.current();
-        unobserveRef.current = undefined;
-      }
-
-      if (!target || !canLoadMore) {
-        return;
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(
-            ({ isIntersecting }) => isIntersecting && onLoadMoreRef.current(),
-          );
-        },
-        {
-          root: rootRef.current,
-          rootMargin: rootMarginRef.current,
-          threshold: thresholdRef.current,
-        },
-      );
-      observer.observe(target);
-      unobserveRef.current = () => observer.unobserve(target);
+      targetRef.current = target;
+      observeTarget();
     },
-    [canLoadMore],
+    [observeTarget],
   );
 
-  const setRootRef = useCallback((root: Element | null) => {
-    rootRef.current = root;
-  }, []);
+  const setRootRef = useCallback(
+    (root: Element | null) => {
+      rootRef.current = root;
+      observeTarget();
+    },
+    [observeTarget],
+  );
 
   return [setTargetRef, setRootRef];
 };
