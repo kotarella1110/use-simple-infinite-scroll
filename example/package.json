@@ -13,7 +13,7 @@
     "react-dom": "^16.12.0",
     "react-query": "^2.23.0",
     "react-query-devtools": "^2.5.1",
-    "use-simple-infinite-scroll": "^1.0.1"
+    "use-simple-infinite-scroll": "^1.0.2"
   },
   "devDependencies": {
     "@types/node": "^14.11.2",
