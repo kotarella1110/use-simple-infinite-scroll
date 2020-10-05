@@ -43,7 +43,7 @@ const InfiniteScrollExample = () => {
   return (
     <div>
       <h1>Infinite Scroll List - Basic</h1>
-      {items.length && isLoading ? (
+      {!items.length && isLoading ? (
         <p>Loading...</p>
       ) : error ? (
         <span>Error: {error.message}</span>
