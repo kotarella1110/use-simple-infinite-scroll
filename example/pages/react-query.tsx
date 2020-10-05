@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   QueryCache,
   ReactQueryCacheProvider,
@@ -20,6 +20,8 @@ type Result = {
 };
 
 const InfiniteScrollExample = () => {
+  const [scrollable, setScrollable] = useState(false);
+
   const {
     status,
     data,
@@ -37,7 +39,7 @@ const InfiniteScrollExample = () => {
     },
   );
 
-  const [targetRef] = useSimpleInfiniteScroll({
+  const [targetRef, rootRef] = useSimpleInfiniteScroll({
     onLoadMore: fetchMore,
     canLoadMore: !!canFetchMore,
   });
@@ -45,6 +47,14 @@ const InfiniteScrollExample = () => {
   return (
     <div>
       <h1>Infinite Scroll List - React Query</h1>
+      <input
+        type="checkbox"
+        checked={scrollable}
+        onChange={(e) => {
+          setScrollable(e.target.checked);
+        }}
+      />{' '}
+      Scrollable
       {status === 'loading' ? (
         <p>Loading...</p>
       ) : status === 'error' ? (
@@ -52,8 +62,12 @@ const InfiniteScrollExample = () => {
       ) : (
         <div
           style={{
+            maxWidth: scrollable ? '500px' : 'auto',
+            maxHeight: scrollable ? '500px' : 'auto',
+            overflow: 'auto',
             backgroundColor: '#e4e4e4',
           }}
+          ref={scrollable ? rootRef : null}
         >
           <ul
             style={{
