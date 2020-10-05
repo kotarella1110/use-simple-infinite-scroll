@@ -47,9 +47,7 @@ const InfiniteScrollExample = () => {
       <input
         type="checkbox"
         checked={scrollable}
-        onChange={(e) => {
-          setScrollable(e.target.checked);
-        }}
+        onChange={(e) => setScrollable(e.target.checked)}
       />{' '}
       Scrollable
       {!items.length && isLoading ? (
@@ -59,8 +57,8 @@ const InfiniteScrollExample = () => {
       ) : (
         <div
           style={{
-            maxWidth: scrollable ? '500px' : 'auto',
-            maxHeight: scrollable ? '500px' : 'auto',
+            maxWidth: scrollable ? '500px' : undefined,
+            maxHeight: scrollable ? '500px' : undefined,
             overflow: 'auto',
             backgroundColor: '#e4e4e4',
           }}
