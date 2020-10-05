@@ -1,0 +1,25 @@
+{
+  "name": "with-typescript",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-query": "^2.23.0",
+    "react-query-devtools": "^2.5.1",
+    "use-simple-infinite-scroll": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.62",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "typescript": "^4.0.3"
+  },
+  "license": "MIT"
+}

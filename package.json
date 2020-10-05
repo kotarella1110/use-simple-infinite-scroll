@@ -17,7 +17,7 @@
   "scripts": {
     "build": "npm run clean && rollup -c",
     "clean": "rimraf dist",
-    "lint": "eslint '**/*.{js,ts}'",
+    "lint": "eslint '**/*.{js,ts,tsx}'",
     "lint:fix": "npm run lint -- --fix",
     "lint:types": "tsc --noEmit",
     "test": "jest",
