@@ -1,27 +1,26 @@
-<h1 align="center">use-simple-infinite-scroll</h1>
+<div align="center">
 
-<h3 align="center">A simple React Hook for infinite scrolling built on the Intersection Observer API</h3>
+<h1>use-simple-infinite-scroll</h1>
 
-<p align="center">
-  <a href="LICENSE.md">
-    <img alt="License" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square">
-  </a>
-  <a href="https://github.com/kotarella1110/use-simple-infinite-scroll/actions?query=workflow%3ARelease">
-    <img alt="Actions Status" src="https://github.com/kotarella1110/use-simple-infinite-scroll/workflows/Release/badge.svg">
-  </a>
-  <a href="https://github.com/semantic-release/semantic-release">
-    <img alt="Semantic Release" src="https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square">
-  </a>
-  <a href="http://commitizen.github.io/cz-cli/">
-    <img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square">
-  </a>
-  <a href="#contributors">
-    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square">
-  </a>
-  <a href="CONTRIBUTING.md">
-    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-green.svg?style=flat-square">
-  </a>
-</p>
+<h3>A simple React Hook for infinite scrolling built on the Intersection Observer API</h3>
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Actions Status](https://github.com/kotarella1110/use-simple-infinite-scroll/workflows/Release/badge.svg)](https://github.com/kotarella1110/use-simple-infinite-scroll/actions?query=workflow%3ARelease)
+[![NPM Version](https://img.shields.io/npm/v/use-simple-infinite-scroll?style=flat-square)](https://www.npmjs.com/package/use-simple-infinite-scroll)
+[![Downloads Month](https://img.shields.io/npm/dm/use-simple-infinite-scroll?style=flat-square)](https://www.npmjs.com/package/use-simple-infinite-scroll)
+[![Downloads Total](https://img.shields.io/npm/dt/use-simple-infinite-scroll?style=flat-square)](https://www.npmjs.com/package/use-simple-infinite-scroll)
+[![Dependencies Status](https://david-dm.org/kotarella1110/use-simple-infinite-scroll.svg?style=flat-square)](https://david-dm.org/kotarella1110/use-simple-infinite-scroll)
+[![Semantic Release](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
+[![Commitizen Friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg?style=flat-square)](CONTRIBUTING.md)
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+</div>
 
 ## Installation
 
@@ -222,7 +221,7 @@ npm install intersection-observer
 Then import it in your app:
 
 ```js
-import "intersection-observer";
+import 'intersection-observer';
 ```
 
 ## Contributing
