@@ -19,7 +19,7 @@ update_configs:
           update_type: "semver:patch"
     version_requirement_updates: "increase_versions"
     commit_message:
-      prefix: "fix"
+      prefix: "chore"
       prefix_development: "chore"
       include_scope: true
   - package_manager: "javascript"
@@ -41,6 +41,6 @@ update_configs:
           update_type: "semver:patch"
     version_requirement_updates: "increase_versions"
     commit_message:
-      prefix: "fix"
+      prefix: "chore"
       prefix_development: "chore"
       include_scope: true
