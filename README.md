@@ -195,7 +195,56 @@ const useSimpleInfiniteScroll: (options: {
 
 For more information on `rootMargin` and `threshold` option, visit the [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
-## IE11
+## FAQ
+
+### How can I assign multiple refs to a component?
+
+You can wrap multiple ref assignments in a single `useCallback`:
+
+```tsx
+import React, { useRef, useCallback } from 'react';
+import { useSimpleInfiniteScroll } from 'use-simple-infinite-scroll';
+
+const InfiniteScrollExample = () => {
+  const rootRef = useRef<HTMLDivElement | null>();
+  const targetRef = useRef<HTMLDivElement | null>();
+
+  const [setTargetRef, setRootRef] = useSimpleInfiniteScroll({
+    onLoadMore: () => {},
+    canLoadMore: true,
+  });
+
+  // Use `useCallback` so we don't recreate the function on each render - Otherwise, the function passed to `onLoadMore` option will be called twice
+  const setRootRefs = useCallback(
+    (node: HTMLDivElement | null) => {
+      // Ref's from useRef needs to have the node assigned to `current`
+      rootRef.current = node;
+      // Callback refs, like the one from `useSimpleInfiniteScroll`, is a function that takes the node as an argument
+      setRootRef(node);
+    },
+    [setRootRef],
+  );
+
+  const setTargetRefs = useCallback(
+    (node: HTMLDivElement | null) => {
+      targetRef.current = node;
+      setTargetRef(node);
+    },
+    [setTargetRef],
+  );
+
+  return (
+    <div ref={setRootRefs}>
+      <div ref={setTargetRefs} />
+    </div>
+  );
+};
+```
+
+## Which browsers are supported?
+
+use-simple-infinite-scroll supports all of the major modern browsers.
+Browsers like IE11 are not supported: if you need to support older browsers you can add [IntersectionObserver polyfill](https://www.npmjs.com/package/intersection-observer).
 
 You can install the [polyfill](https://www.npmjs.com/package/intersection-observer) via npm or by downloading a [zip](https://github.com/w3c/IntersectionObserver/archive/gh-pages.zip) of this repository:
 
