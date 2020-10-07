@@ -34,9 +34,9 @@ npm install use-simple-infinite-scroll
 
 ### Basic
 
-```ts
+```tsx
 import React, { useState } from 'react';
-import { useSimpleInfiniteScroll } from '../use-simple-infinite-scroll';
+import { useSimpleInfiniteScroll } from 'use-simple-infinite-scroll';
 
 type Item = {
   id: number;
@@ -52,7 +52,6 @@ const canFetchMore = (nextCursor: Result['nextCursor']) => nextCursor !== null;
 
 const InfiniteScrollExample = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = React.useState<Error>();
   const [items, setItems] = useState<Item[]>([]);
   const [nextCursor, setNextCursor] = useState<Result['nextCursor']>(0);
 
@@ -60,54 +59,35 @@ const InfiniteScrollExample = () => {
     setIsLoading(true);
     fetch(`/api/items?cursor=${nextCursor}`)
       .then((res) => res.json())
-      .then(
-        (res: Result) => {
-          setItems([...items, ...res.data]);
-          setNextCursor(res.nextCursor);
-          setIsLoading(false);
-        },
-        (e: Error) => setError(e),
-      );
+      .then((res: Result) => {
+        setItems([...items, ...res.data]);
+        setNextCursor(res.nextCursor);
+        setIsLoading(false);
+      });
   };
 
-  const [targetRef, rootRef] = useSimpleInfiniteScroll({
+  const [targetRef] = useSimpleInfiniteScroll({
     onLoadMore: fetchMore,
     canLoadMore: canFetchMore(nextCursor),
   });
 
-  return !items.length && isLoading ? (
-    <p>Loading...</p>
-  ) : error ? (
-    <span>Error: {error.message}</span>
-  ) : (
-    <div
-      style={{
-        maxWidth: '500px',
-        maxHeight: '500px',
-        overflow: 'auto',
-      }}
-      ref={rootRef}
-    >
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-      <div>
-        <button
-          type="button"
-          ref={targetRef}
-          onClick={() => fetchMore()}
-          disabled={!canFetchMore(nextCursor) || !!isLoading}
-        >
-          {isLoading
-            ? 'Loading more...'
-            : canFetchMore(nextCursor)
-            ? 'Load More'
-            : 'Nothing more to load'}
-        </button>
+  return (
+    <>
+      {items.length !== 0 ? (
+        <ul>
+          {items.map((item) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      ) : null}
+      <div ref={targetRef}>
+        {isLoading
+          ? 'Loading more...'
+          : canFetchMore(nextCursor)
+          ? 'Load More'
+          : 'Nothing more to load'}
       </div>
-    </div>
+    </>
   );
 };
 ```
@@ -147,7 +127,7 @@ const InfiniteScrollExample = () => {
     },
   );
 
-  const [targetRef] = useSimpleInfiniteScroll({
+  const [targetRef, rootRef] = useSimpleInfiniteScroll({
     onLoadMore: fetchMore,
     canLoadMore: !!canFetchMore,
   });
@@ -157,7 +137,12 @@ const InfiniteScrollExample = () => {
   ) : status === 'error' ? (
     <span>Error: {error && error.message}</span>
   ) : (
-    <>
+    <div
+      style={{
+        overflow: 'auto',
+      }}
+      ref={rootRef}
+    >
       <ul>
         {data &&
           data.map((page, i) => (
@@ -185,7 +170,7 @@ const InfiniteScrollExample = () => {
       <div>
         {isFetching && !isFetchingMore ? 'Background Updating...' : null}
       </div>
-    </>
+    </div>
   );
 };
 ```
