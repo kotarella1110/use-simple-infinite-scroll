@@ -199,13 +199,13 @@ For more information on `rootMargin` and `threshold` option, visit the [MDN web 
 
 ### How can I assign multiple refs to a component?
 
-You can wrap multiple ref assignments in a single `useCallback`:
+You can wrap multiple `ref` assignments in a single `useCallback`:
 
 ```tsx
 import React, { useRef, useCallback } from 'react';
 import { useSimpleInfiniteScroll } from 'use-simple-infinite-scroll';
 
-const InfiniteScrollExample = () => {
+const AssignMultipleRefsExample = () => {
   const rootRef = useRef<HTMLDivElement | null>();
   const targetRef = useRef<HTMLDivElement | null>();
 
@@ -241,12 +241,12 @@ const InfiniteScrollExample = () => {
 };
 ```
 
-## Which browsers are supported?
+### Which browsers are supported?
 
 use-simple-infinite-scroll supports all of the major modern browsers.
 Browsers like IE11 are not supported: if you need to support older browsers you can add [IntersectionObserver polyfill](https://www.npmjs.com/package/intersection-observer).
 
-You can install the [polyfill](https://www.npmjs.com/package/intersection-observer) via npm or by downloading a [zip](https://github.com/w3c/IntersectionObserver/archive/gh-pages.zip) of this repository:
+You can install the polyfill via npm or by downloading a [zip](https://github.com/w3c/IntersectionObserver/archive/gh-pages.zip) of this repository:
 
 ```sh
 npm install intersection-observer
