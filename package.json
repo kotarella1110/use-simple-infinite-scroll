@@ -75,7 +75,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.29.0",
-    "react-test-renderer": "^16.13.1",
+    "react-test-renderer": "^16.14.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.29.0",
     "rollup-plugin-filesize": "^9.0.2",
