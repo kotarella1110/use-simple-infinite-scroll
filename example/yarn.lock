@@ -1082,10 +1082,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
   integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
 
-"@types/node@^14.14.3":
-  version "14.14.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.3.tgz#e1c09064121f894baaad2bd9f12ce4a41bffb274"
-  integrity sha512-33/L34xS7HVUx23e0wOT2V1qPF1IrHgQccdJVm9uXGTB9vFBrrzBtkQymT8VskeKOxjz55MSqMv0xuLq+u98WQ==
+"@types/node@^14.14.4":
+  version "14.14.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.4.tgz#38ca24d94a935506eeaf77b6062c906fba054ef0"
+  integrity sha512-AtE3ulstIxbCVBYMrO178jewndK5OzcwvHDAjv69N9G3TcXHyZe7Jr0MuPhqRkf7Bik/bt3vpg19ALxvJO0rAg==
 
 "@types/prop-types@*":
   version "15.7.3"
