@@ -74,7 +74,7 @@
     "prettier": "^2.2.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-intersection-observer": "^8.30.3",
+    "react-intersection-observer": "^8.31.0",
     "react-test-renderer": "^16.14.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.33.3",
