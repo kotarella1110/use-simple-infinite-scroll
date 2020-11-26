@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/kotarella1110/use-simple-infinite-scroll/compare/v1.0.1...v1.0.2) (2020-11-26)
+
+
+### Bug Fixes
+
+* update peer dependencies for react ([#165](https://github.com/kotarella1110/use-simple-infinite-scroll/issues/165)) ([e02f4d3](https://github.com/kotarella1110/use-simple-infinite-scroll/commit/e02f4d3271a6b744d1f47812c55b6ce87936597e)), closes [#164](https://github.com/kotarella1110/use-simple-infinite-scroll/issues/164)
+
 ## [1.0.1](https://github.com/kotarella1110/use-simple-infinite-scroll/compare/v1.0.0...v1.0.1) (2020-10-05)
 
 
