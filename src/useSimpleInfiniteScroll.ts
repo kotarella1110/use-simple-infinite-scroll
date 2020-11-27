@@ -5,6 +5,9 @@ type Options = {
   onLoadMore: () => void;
 } & Omit<IntersectionObserverInit, 'root'>;
 
+const isIntersectionObserverAvailable = () =>
+  typeof window !== 'undefined' && 'IntersectionObserver' in window;
+
 // eslint-disable-next-line import/prefer-default-export
 export const useSimpleInfiniteScroll = ({
   canLoadMore,
@@ -15,6 +18,17 @@ export const useSimpleInfiniteScroll = ({
   (target: Element | null) => void,
   (root: Element | null) => void,
 ] => {
+  if (process.env.NODE_ENV !== 'production') {
+    if (!isIntersectionObserverAvailable()) {
+      throw new Error(
+        'IntersectionObserver is not available. This could happen for one of the following reasons:\n' +
+          '1. IntersectionObserver is not supported in your current browser\n' +
+          "2. You're using the useSimpleInfiniteScroll hook whilst server side rendering\n" +
+          'See https://github.com/kotarella1110/use-simple-infinite-scroll#which-browsers-are-supported for tips about how to add polyfill.',
+      );
+    }
+  }
+
   const onLoadMoreRef = useRef(() => {});
   const rootMarginRef = useRef(rootMargin);
   const thresholdRef = useRef(threshold);

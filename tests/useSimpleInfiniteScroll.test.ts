@@ -33,6 +33,25 @@ describe('useSimpleInfiniteScroll', () => {
     ref(target);
   });
 
+  it('should throw error when IntersectionObserver is not available', () => {
+    // @ts-ignore
+    const tmp = global.IntersectionObserver;
+    // @ts-ignore
+    delete global.IntersectionObserver;
+
+    const { result } = renderHook(() =>
+      useSimpleInfiniteScroll({
+        onLoadMore: () => {},
+        canLoadMore: false,
+      }),
+    );
+
+    expect(result.error.message).toBeDefined();
+
+    // @ts-ignore
+    global.IntersectionObserver = tmp;
+  });
+
   it('should observe when canLoadMore is true', () => {
     const observer = intersectionMockInstance(target);
 
