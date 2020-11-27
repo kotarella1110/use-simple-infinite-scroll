@@ -5,7 +5,7 @@ type Options = {
   onLoadMore: () => void;
 } & Omit<IntersectionObserverInit, 'root'>;
 
-const isIntersectionObserverAvailable =
+const isIntersectionObserverAvailable = () =>
   typeof window !== 'undefined' && 'IntersectionObserver' in window;
 
 // eslint-disable-next-line import/prefer-default-export
@@ -19,7 +19,7 @@ export const useSimpleInfiniteScroll = ({
   (root: Element | null) => void,
 ] => {
   if (process.env.NODE_ENV !== 'production') {
-    if (!isIntersectionObserverAvailable) {
+    if (!isIntersectionObserverAvailable()) {
       throw new Error(
         'IntersectionObserver is not available. This could happen for one of the following reasons:\n' +
           '1. IntersectionObserver is not supported in your current browser\n' +
