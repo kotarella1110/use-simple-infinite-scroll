@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/kotarella1110/use-simple-infinite-scroll/compare/v1.0.2...v1.1.0) (2020-11-27)
+
+
+### Features
+
+* throw error when intersectionobserver is not available ([#167](https://github.com/kotarella1110/use-simple-infinite-scroll/issues/167)) ([52a0ede](https://github.com/kotarella1110/use-simple-infinite-scroll/commit/52a0ede1b9995aa258c43e40d46536428f85f6c0))
+
 ## [1.0.2](https://github.com/kotarella1110/use-simple-infinite-scroll/compare/v1.0.1...v1.0.2) (2020-11-26)
 
 
