@@ -16,7 +16,7 @@
     "use-simple-infinite-scroll": "^1.1.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.35",
+    "@types/node": "^14.14.36",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "typescript": "^4.2.3"
