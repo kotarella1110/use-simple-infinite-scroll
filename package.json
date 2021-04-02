@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/kotarella1110/use-simple-infinite-scroll#readme",
   "devDependencies": {
-    "@commitlint/cli": "^12.0.1",
+    "@commitlint/cli": "^12.1.0",
     "@commitlint/config-conventional": "^12.0.1",
     "@commitlint/prompt-cli": "^12.1.0",
     "@rollup/plugin-commonjs": "^18.0.0",
