@@ -1,0 +1,49 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "20:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+  versioning-strategy: increase
+  ignore:
+  - dependency-name: "@testing-library/react-hooks"
+    versions:
+    - 5.0.3
+    - 5.1.0
+    - 5.1.1
+  - dependency-name: "@rollup/plugin-replace"
+    versions:
+    - 2.4.2
+  - dependency-name: eslint-config-airbnb-typescript
+    versions:
+    - 12.0.1
+    - 12.2.0
+    - 12.3.0
+  commit-message:
+    prefix: chore
+    prefix-development: chore
+    include: scope
+- package-ecosystem: npm
+  directory: "/example"
+  schedule:
+    interval: daily
+    time: "20:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+  versioning-strategy: increase
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 15.0.0
+  - dependency-name: next
+    versions:
+    - 10.1.0
+    - 10.1.1
+    - 10.1.2
+  commit-message:
+    prefix: chore
+    prefix-development: chore
+    include: scope
