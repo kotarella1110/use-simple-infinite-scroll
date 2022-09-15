@@ -11,7 +11,7 @@
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-query": "^2.26.4",
+    "react-query": "^3.39.2",
     "react-query-devtools": "^2.6.3",
     "use-simple-infinite-scroll": "^1.1.0"
   },
